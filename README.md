@@ -69,5 +69,27 @@ _Briefly description_
 In simple terms, __the user will give to the UI node an input__ that will be either a good one ('a', 's', 'r') or a bad one, which will give back an error input on the console. __The server will process this input, by releasing a float value that will be the acceleration value.__ Then __the UI will write in a custom message to the controller node which will read the actual value of the acceleration.__ Then __the controller node will send to the stageros node the updated informations of the velocity.__ __Another task of the server node is the one regarding the call__ of a service of the ROS library __of the reset of the position of the robot.__
 
 ## Nodes and their logic
+
 _Here I will explain each node code and tasks, to have a deeper description of the code, check the comments inside of it._
-#
+
+### stageros node (stage_ros package)
+
+The stageros node wraps the Stage 2-D multi-robot simulator, via libstage. Stage simulates a world as defined in a .world file. This file tells stage everything about the world, from obstacles (usually represented via a bitmap to be used as a kind of background), to robots and other objects.
+The nodes has the following aspects:
+- Subscriptions
+  - The node subscribes to the `cmd_vel geometry_msgs/Twist` topic, to manage the velocity of the robot.
+- Publishing
+    - `odom (nav_msgs/Odometry)`: odometry data of the model. 
+    - `base_scan (sensor_msgs/LaserScan)`: __scans from the laser model. We will use this one.__
+    - `base_pose_ground_truth (nav_msgs/Odometry)`: __the ground truth pose. We will use this one.__
+    - `image (sensor_msgs/Image)`: visual camera image.
+    - `depth (sensor_msgs/Image)`: depth camera image.
+    - `camera_info (sensor_msgs/CameraInfo)`: camera calibration info.
+
+### controller node (second_assignment package)
+
+The controller node has two main tasks:
+1. It moves the robot inside the enviroment.
+2. It changes the velocity of the robot.
+
+These tasks are completed with the callback function and the main of the node. The `main()` initialise the node with the init() function and subscribes to different topics.
