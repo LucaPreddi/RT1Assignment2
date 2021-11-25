@@ -16,6 +16,9 @@ to make ROS understand your package.
 
 Once you have installed ROS and the package, run in five different consoles the following commands:
 ```bash
+$ roscore &
+```
+```bash
 $ rosrun stage_ros stageros $(rospack find second_assignment)/world/my_world.world
 ```
 ```bash
@@ -43,4 +46,14 @@ The circuit is the following:
 <img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/MonzaCircuit.png" width="500" height="450">
 </p>
 
-Yes, that small dot on the left is the actual robot, which is moving clockwise. As you can see
+Yes, that small dot on the left is the actual robot, which is moving clockwise. The professor had many request about the assignment:
+- The node controlling the robot should also implement the functionality to increase and decrease velocity through the use of a server.
+- The Ul node should constantly wait for an input for the user, which can either ask to increment or decrement the velocity, or to put the robot to an initial state. The commands are:
+  - 'a' to accelerate.
+  - 'b' to decelerate.
+  - 'r' to reset the position of the robot.
+
+Logic behind the nodes
+----------------------
+
+To satisfy the requests I decided to code three different nodes inside the package, more the one regarding the stage_ros simulator. Here's the idea behind the communication of the nodes:
