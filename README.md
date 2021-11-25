@@ -77,7 +77,7 @@ _Here I will explain each node code and tasks, to have a deeper description of t
 The stageros node wraps the Stage 2-D multi-robot simulator, via libstage. Stage simulates a world as defined in a .world file. This file tells stage everything about the world, from obstacles (usually represented via a bitmap to be used as a kind of background), to robots and other objects.
 The nodes has the following aspects:
 - Subscriptions
-  - The node subscribes to the `cmd_vel geometry_msgs/Twist` topic, to manage the velocity of the robot.
+  - The node subscribes to the `cmd_vel (geometry_msgs/Twist)` topic, to manage the velocity of the robot.
 - Publishing
     - `odom (nav_msgs/Odometry)`: odometry data of the model. 
     - `base_scan (sensor_msgs/LaserScan)`: __scans from the laser model. We will use this one.__
@@ -88,8 +88,9 @@ The nodes has the following aspects:
 
 ### controller node (second_assignment package)
 
-The controller node has two main tasks:
-1. It moves the robot inside the enviroment.
-2. It changes the velocity of the robot.
-
-These tasks are completed with the callback function and the main of the node. The `main()` initialise the node with the init() function and subscribes to different topics.
+The controller node has two main tasks, the first is to move the robot inside the enviroment se second changes the velocity of the robot. These tasks are completed with the callback function and the main of the node. The `main()` initialise the node with the init() function and subscribes to different topics.
+- Subscriptions
+  - `base_scan (sensor_msgs/Laser_scan)` which provides data about the laser that scans the surroundings of the robot. I will develop the laser code later.
+  - `Accval (second_assignment/Accval)` which provides the amount to add to the base velocity.
+- Publishing
+  - `cmd_vel geometry_msgs/Twist` which is the topic to change the linear and angular velocity's values of the robot.
