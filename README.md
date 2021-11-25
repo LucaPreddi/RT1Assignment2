@@ -53,7 +53,21 @@ Yes, that small dot on the left is the actual robot, which is moving clockwise. 
   - 'b' to decelerate.
   - 'r' to reset the position of the robot.
 
-Logic behind the nodes
+Logic behind the code
 ----------------------
 
 To satisfy the requests I decided to code three different nodes inside the package, more the one regarding the stage_ros simulator. Here's the idea behind the communication of the nodes:
+
+<p align="center">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Blank%20diagram.jpeg" width="520" height="360">
+</p>
+
+As you can see, it's not a tricky communication but it still needs some attention especially for the use of the server, I will explain each node by the tasks and the code inside of it.
+
+_Briefly description_
+
+In simple terms, __the user will give to the UI node an input__ that will be either a good one ('a', 's', 'r') or a bad one, which will give back an error input on the console. __The server will process this input, by releasing a float value that will be the acceleration value.__ Then __the UI will write in a custom message to the controller node which will read the actual value of the acceleration.__ Then __the controller node will send to the stageros node the updated informations of the velocity.__ __Another task of the server node is the one regarding the call__ of a service of the ROS library __of the reset of the position of the robot.__
+
+## Nodes and their logic
+_Here I will explain each node code and tasks, to have a deeper description of the code, check the comments inside of it._
+#
