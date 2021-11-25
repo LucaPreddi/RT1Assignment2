@@ -28,3 +28,19 @@ $ rosrun second_assignment server_node
 $ rosrun second_assignment UI_node
 ```
 (__small tip, use [Terminator](https://dev.to/xeroxism/how-to-install-terminator-a-linux-terminal-emulator-on-steroids-1m3h) emulator, pretty useful when you need to use many consoles at the same time!__) 
+
+<p align="center">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Terminator.png" width="400" height="300">
+</p>
+
+Introduction
+----------------------
+
+The aim of the project was to make the robot move inside a circuit (actually, to be more accurate, the Monza Circuit) without letting it hit the walls and, thanks to a UI, making the user decide the speed of the robot.
+
+The circuit is the following:
+<p align="center">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/MonzaCircuit.png" width="500" height="450">
+</p>
+
+Yes, that small dot on the left is the actual robot, which is moving clockwise. As you can see
