@@ -109,6 +109,11 @@ float StudyDistance(int min, int max,float ranges[]){
     return val_min;
 }
 ```
+Here's the idea behind the movement, the flowchart is really really simple because I used the old algorith used for the first assignment in python and it does work perfectly. Anyway the code can be improved by paying more attention to the parameters and if statements.
+
+<p align="center">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Flowchar.jpeg" width="600" height="500">
+</p>
 
 With these informations, the algorithm can work perfectly.
 Here in code (this is all inside the `RobotCallback()`):
