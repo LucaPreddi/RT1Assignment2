@@ -204,8 +204,22 @@ void CharCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
 So the UI node get the input, send a request to the server, waits for a response from the server, then sends the acceleration value to the controller node. In logic blocks:
 
 <p align="center">
-<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Schermata%202021-11-29%20alle%2015.59.31.png">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Schermata%202021-11-29%20alle%2015.59.31.png"width="450" height="159">
 </p>
 
 As we can see the UI node is the center of this communication.
 
+## Conclusion and possible improvements
+The work overall satisfied me especially because this is the first real kind of project I've ever approached with ROS. I understood the potentional of this tool and what can be easily created with it. To conclude the communication of the nodes I will show yo with the node
+
+`rosrun rqt_graph rqt_graph`
+
+the relationship between all the nodes:
+
+<p align="center">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Schermata%202021-11-25%20alle%2016.22.59.png"width="600" height="290">
+</p>
+
+The possible improvements that can be done are a lot. 
+- First of all the algorithm managing the direction and speed of the robot can be improved because, as you can see when running, the robot has difficult when turning in the circuit. 
+- Second, the UI interface has simple outputs and visuals for the user. If the UI node had more aesthetic values it can be easier to use and appreciatable.
