@@ -94,3 +94,92 @@ The controller node has two main tasks, the first is to move the robot inside th
   - `Accval (second_assignment/Accval)` which provides the amount to add to the base velocity.
 - Publishing
   - `cmd_vel geometry_msgs/Twist` which is the topic to change the linear and angular velocity's values of the robot.
+
+The main role of the controller node, as I said, is to make the robot move inside the enviroment, this happens thanks to the subscription to `base_scan`, such that the `RobotCallback()` function can loop with `ros::spin()` inside the `main()` function. 
+
+After making the `RobotCallback()` function loop, I developed a simple algorithm made out of three _if_ statements. This algorithm is really close to the [assigment 1 `main()` function](https://github.com/LucaPreddi/RT1Assignment1#main-function-). This algorithm uses the `StudyDistance()` function which is super useful to get the distance of the nearest wall on the front, left and right of the robot. Here's the code:
+
+```cpp
+float StudyDistance(int min, int max,float ranges[]){
+
+    float val_min = 100.0;
+    for(int i = min; i <= max; i++){
+        if (ranges[i]<=val_min) val_min = ranges[i];
+    }
+    return val_min;
+}
+```
+
+With these informations, the algorithm can work perfectly.
+Here in code (this is all inside the `RobotCallback()`):
+```cpp
+    val_min_right = StudyDistance(0, 100, laser);
+    val_min_front = StudyDistance(310, 410, laser); 
+    val_min_left = StudyDistance(620, 720, laser);
+
+    if(val_min_front<1.5){
+        if(val_min_left>val_min_right){
+            my_vel.angular.z = 1;
+            my_vel.linear.x = 0.1;
+        }
+        else if(val_min_right>val_min_left){
+            my_vel.angular.z = -1;
+            my_vel.linear.x = 0.1;
+        }
+    }
+    else{
+        my_vel.linear.x = 1 + adder;
+        my_vel.angular.z = 0;
+    }
+```
+As you can see the code is really simple and it can be improved! But as far as I wanted to understand how ROS works, I preferred to spend time in improving the nodes relations instead of improving the algorithm itself. 
+
+Another important function is the `AccelerationCallback()` which is the one that reads from the custom message the amount of velocity we want to add (called improprierly acceleration).
+```cpp
+void AccelarationCallback(const second_assignment::Accval::ConstPtr& uno){
+    adder = uno->acc;
+}
+```
+Where adder is a global variable that we use in the `RobotCallback()` function. 
+
+### server node (second_assignment package)
+
+This node is crucial for the use of the UI node and therefore therefore the use of the User Interface commands. As we saw before, the user can either press:
+- 'a' to accelerate.
+- 's' to decelerate.
+- 'r' to reset the position of the robot inside the circuit.
+To make the code fancier and to manage the input request and response in a better way. I could easily do it with two nodes.
+
+Anyway when the user puts a variable inside the server from the UI node the server reads it and depending on wheter the input is it gives something in the response as output. The .srv file is structured like this:
+```
+char input
+---
+float32 val
+```
+as we can see there's a char in _request_ and a val in _response_. The value depends on the input obviously and it is assigned inside the ` ServerCallback()` function. Which is spinned on the main when the server service receives a request. Here in code:
+```cpp
+bool ServerCallback(second_assignment::Accelerate::Request &req, second_assignment::Accelerate::Response &res){
+	if(req.input == 'a'){
+		stuff += 0.5;
+		req.input = 'x';
+	}
+	if(req.input == 's'){
+		stuff -= 0.5;
+		req.input = 'x';
+	}
+	if(req.input == 'r'){
+		ros::service::call("/reset_positions", res_server);
+	}
+	if(req.input == 'x'){
+	}
+	if(req.input != 'x' && req.input != 's' && req.input != 'a' && req.input != 'r'){
+		std::cout << "It's not the right key!\n";
+	}
+	res.val = stuff;
+	ROS_INFO("Right: @[%f]", res.val);    
+	return true;
+}
+```
+The char 'x' is just something to don't let the function increment endlessy the value. As we can see when we get as request 'r' we call the service `/reset_positions` of `res_server` to reset the position of the robot.
+
+### UI node (second_assignment package)
