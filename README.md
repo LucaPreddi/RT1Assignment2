@@ -183,3 +183,29 @@ bool ServerCallback(second_assignment::Accelerate::Request &req, second_assignme
 The char 'x' is just something to don't let the function increment endlessy the value. As we can see when we get as request 'r' we call the service `/reset_positions` of `res_server` to reset the position of the robot.
 
 ### UI node (second_assignment package)
+The UI node as the name can suggest, is the core of the User Interface and it communicates with both the nodes, server and controller. It get the input by the terminal and sends a request to the server, which will provide a response still to the UI node. This happens all inside the CharCallback() function.
+- Subscriptions
+  - The node subscribes to `base_scan (sensor_msgs/LaserScan)` which makes with `ros::spin()` the endless loop.
+- Publishing
+  - The node publishes to the `Accval (second_assignment/Accval)` topic that controller.cpp will read.
+Here's the code of the `CharCallback()` function:
+```cpp
+void CharCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
+	second_assignment::Accelerate a_srv;
+	char in = GetChar();
+	a_srv.request.input = in;
+	client1.waitForExistence();
+	client1.call(a_srv);
+	second_assignment::Accval n;
+	n.acc = a_srv.response.val;
+	pub.publish(n);
+}
+```
+So the UI node get the input, send a request to the server, waits for a response from the server, then sends the acceleration value to the controller node. In logic blocks:
+
+<p align="center">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Schermata%202021-11-29%20alle%2015.59.31.png">
+</p>
+
+As we can see the UI node is the center of this communication.
+
