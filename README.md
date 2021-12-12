@@ -252,7 +252,7 @@ The work overall satisfied me especially because this is the first real kind of 
 the relationship between all the nodes:
 
 <p align="center">
-<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Schermata%202021-11-25%20alle%2016.22.59.png"width="600" height="290">
+<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Schermata%202021-12-12%20alle%2013.12.58.png">
 </p>
 
 The possible improvements that can be done are a lot. 
