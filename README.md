@@ -190,7 +190,7 @@ The char 'x' is just something to don't let the function increment endlessy the 
 ### UI node (second_assignment package)
 The UI node as the name can suggest, is the core of the User Interface and it communicates with both the nodes, server and controller. It get the input by the terminal and sends a request to the server, which will provide a response still to the UI node. This happens all inside the CharCallback() function.
 - Subscriptions
-  - The node subscribes to `base_scan (sensor_msgs/LaserScan)` which makes with `ros::spin()` the endless loop.
+  - None.
 - Publishing
   - The node publishes to the `Accval (second_assignment/Accval)` topic that controller.cpp will read.
 Here's the code of the `CharCallback()` function:
@@ -204,6 +204,36 @@ void CharCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
 	second_assignment::Accval n;
 	n.acc = a_srv.response.val;
 	pub.publish(n);
+}
+```
+The function spins on the `main()` function as long as ROS is running with a `while(ROS::ok())` loop.
+In code:
+```cpp
+int main (int argc, char **argv) 
+{
+	// Initialize the node, setup the NodeHandle 
+	// for handling the communication with the 
+	// ROS //system.
+
+	ros::init(argc, argv, "UI"); 
+	ros::NodeHandle nh;
+
+	// Defining the publishing of the message Accval.
+
+	pub = nh.advertise<second_assignment::Accval>("/accval", 10); 
+
+	// Creating the client with his attributes.
+
+	client1 = nh.serviceClient<second_assignment::Accelerate>("/accelarate");
+
+	// Making the function spin.
+
+	while(ros::ok()){
+		CharCallback();
+		ros::spinOnce();
+	}
+
+	return 0;
 }
 ```
 So the UI node get the input, send a request to the server, waits for a response from the server, then sends the acceleration value to the controller node. In logic blocks:
