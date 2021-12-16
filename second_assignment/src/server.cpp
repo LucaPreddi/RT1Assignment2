@@ -17,14 +17,14 @@ bool ServerCallback(second_assignment::Accelerate::Request &req, second_assignme
 
 	if(req.input == 'a'){
 		stuff += 0.5;
-		req.input = 'x';
+		req.input = 'g';
 	}
 
 	// If the input is 's' we decrease the value.
 
 	if(req.input == 's'){
 		stuff -= 0.5;
-		req.input = 'x';
+		req.input = 'g';
 	}
 
 	// If the input is 'r' we reset the position by calling the 
@@ -37,20 +37,19 @@ bool ServerCallback(second_assignment::Accelerate::Request &req, second_assignme
 	// We use x as input in order not to modify in loop the value
 	// of the velocity.
 
-	if(req.input == 'x'){
+	if(req.input == 'g'){
 	}
 
 	// If we put something else we print in the server node console
 	// that the user has made some mistakes in typing.
 
-	if(req.input != 'x' && req.input != 's' && req.input != 'a' && req.input != 'r'){
+	if(req.input != 'g' && req.input != 's' && req.input != 'a' && req.input != 'r'){
 		std::cout << "It's not the right key!\n";
 	}
 
 	// We put in the response the value.
 
-	res.val = stuff;
-	ROS_INFO("Right: @[%f]", res.val);    
+	res.val = stuff;   
 	return true;
 }
 

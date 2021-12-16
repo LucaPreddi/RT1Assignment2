@@ -1,0 +1,6 @@
+<launch>
+<node name="stageros" pkg="stage_ros" args="$(find second_assignment)/world/my_world.world" type="stageros"/>
+<node name="controller_node" pkg="second_assignment" output="screen" type="controller_node"/>
+<node name="server_node" pkg="second_assignment" output="screen" type="server_node"/>
+<node name="UI_node" pkg="second_assignment" output="screen" required="true" type="UI_node"/>
+</launch>

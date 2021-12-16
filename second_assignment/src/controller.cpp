@@ -73,7 +73,6 @@ void RobotCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
     // Publishing the velocity of the robot.
 
     float velocity = my_vel.linear.x;
-    ROS_INFO("Right: @[%f]", adder);    
     pub.publish(my_vel);
 }
 

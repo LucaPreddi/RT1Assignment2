@@ -14,12 +14,15 @@ ros::ServiceClient client1;
 
 ros::Publisher pub;
 
+bool stop = false;
+
 // Implementing the function to read the input char.
 
 char GetChar(){
 	char c;
 	std::cout << "Do you want to accelarate or decelerate? [a] or [s]?\n";
 	std::cout << "If you want to reset, press 'r'!\n";
+	std::cout << "If you want to quit, press 'q'.\n";
 	std::cin >> c;
 	return c;
 }
@@ -38,6 +41,10 @@ void CharCallback(){
 	// Sending a char as request.
 
 	a_srv.request.input = in;
+
+	// If input is q we quit the program.
+
+	if(in == 'q') stop = true;
 
 	// Waiting for the server to give a response.
 
@@ -71,7 +78,7 @@ int main (int argc, char **argv)
 
 	// Making the function spin.
 
-	while(ros::ok()){
+	while(ros::ok() && !stop){
 		CharCallback();
 		ros::spinOnce();
 	}
