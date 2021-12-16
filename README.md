@@ -8,33 +8,27 @@ The simulator requires ROS (Robot Operating System), which is a set of software 
 
 Anyway you can check every release of ROS in this [link](http://wiki.ros.org/ROS/Installation).
 
-Once you have installed and ran (with ```$ roscore```) ROS, you should've even created a workspace where you can build up your packages. So, if you haven't still done it, download the package on GitHub and copy it in your `/src` folder. Then you should run:
+Another tool to be installed is the xterm interface. We use it to make the user experience more appreciatable, so run this command:
 ```bash
-$ catkin_make
+$ sudo apt-get install -y xterm
 ```
-to make ROS understand your package.
-
-Once you have installed ROS and the package, run in five different consoles the following commands:
+Once you have installed ROS and xterm, you should've even created a workspace where you can build up your packages. So, if you haven't still done it, download the package on GitHub and copy it in your `/src` folder. Then you should run:
 ```bash
 $ roscore &
 ```
+to __run ROS__ in your pc.
 ```bash
-$ rosrun stage_ros stageros $(rospack find second_assignment)/world/my_world.world
+$ catkin_make
 ```
+to __build the workspace__. Then, in order to refresh the package list, run:
 ```bash
-$ rosrun second_assignment controller_node
+$ rospack profile
 ```
+Once you have installed ROS and the package, __run the following roslaunch__:
 ```bash
-$ rosrun second_assignment server_node
+$ roslaunch second_assignment run.launch
 ```
-```bash
-$ rosrun second_assignment UI_node
-```
-(__small tip, use [Terminator](https://dev.to/xeroxism/how-to-install-terminator-a-linux-terminal-emulator-on-steroids-1m3h) emulator, pretty useful when you need to use many consoles at the same time!__) 
-
-<p align="center">
-<img src="https://github.com/LucaPreddi/RT1Assignment2/blob/main/Images/Terminator.png" width="400" height="300">
-</p>
+__You should now see three different windows, two consoles and the circuit.__
 
 Introduction
 ----------------------
@@ -180,8 +174,7 @@ bool ServerCallback(second_assignment::Accelerate::Request &req, second_assignme
 	if(req.input != 'x' && req.input != 's' && req.input != 'a' && req.input != 'r'){
 		std::cout << "It's not the right key!\n";
 	}
-	res.val = stuff;
-	ROS_INFO("Right: @[%f]", res.val);    
+	res.val = stuff; 
 	return true;
 }
 ```
