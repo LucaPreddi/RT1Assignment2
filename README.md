@@ -239,8 +239,9 @@ As we can see the UI node is the center of this communication.
 
 ## Conclusion and possible improvements
 The work overall satisfied me especially because this is the first real kind of project I've ever approached with ROS. I understood the potentional of this tool and what can be easily created with it. To conclude the communication of the nodes I will show yo with the node
-
-`rosrun rqt_graph rqt_graph`
+```bash
+rosrun rqt_graph rqt_graph
+```
 
 the relationship between all the nodes:
 
