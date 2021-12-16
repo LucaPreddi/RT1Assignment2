@@ -147,6 +147,10 @@ This node is crucial for the use of the UI node and therefore therefore the use 
 - 'a' to accelerate.
 - 's' to decelerate.
 - 'r' to reset the position of the robot inside the circuit.
+__Note__: in the UI_node I decided to let the user quit the program with [q], in order to use the single node run it alone with:
+```bash
+$ roslaunch second_assignment [node]
+```
 To make the code fancier and to manage the input request and response in a better way. I could easily do it with two nodes.
 
 Anyway when the user puts a variable inside the server from the UI node the server reads it and depending on wheter the input is it gives something in the response as output. The .srv file is structured like this:
