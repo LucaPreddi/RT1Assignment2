@@ -6,6 +6,12 @@
 #include "second_assignment/Accval.h"
 #include "std_srvs/Empty.h"
 
+// Defining colors.
+
+#define BHGRN "\e[1;92m"
+#define BHMAG "\e[1;95m"
+#define RESET "\033[0m"
+
 // Declaring the publisher and the message, plus some global variables.
 
 ros::Publisher pub;
@@ -73,7 +79,16 @@ void RobotCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
     // Publishing the velocity of the robot.
 
     float velocity = my_vel.linear.x;
+    float turning = my_vel.angular.z;
+
     pub.publish(my_vel);
+
+    // Printing velocity.
+
+    printf(BHMAG "Linear velocity: " RESET);
+    printf(BHGRN "%f, " RESET, velocity);
+    printf(BHMAG "Angular velocity: " RESET);
+    printf(BHGRN "%f\n" RESET, turning);
 }
 
 // The AccelarationCallback is crucial for the code because thanks to the 

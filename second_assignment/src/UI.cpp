@@ -6,6 +6,18 @@
 #include "second_assignment/Accval.h"
 #include "std_srvs/Empty.h"
 
+// Defining colors.
+
+#define BHBLK "\e[1;90m"
+#define BHRED "\e[1;91m"
+#define BHGRN "\e[1;92m"
+#define BHYEL "\e[1;93m"
+#define BHBLU "\e[1;94m"
+#define BHMAG "\e[1;95m"
+#define BHCYN "\e[1;96m"
+#define BHWHT "\e[1;97m"
+#define RESET "\033[0m"
+
 // Declaring ServiceClient global object.
 
 ros::ServiceClient client1;
@@ -20,9 +32,9 @@ bool stop = false;
 
 char GetChar(){
 	char c;
-	std::cout << "Do you want to accelarate or decelerate? [a] or [s]?\n";
-	std::cout << "If you want to reset, press 'r'!\n";
-	std::cout << "If you want to quit, press 'q'.\n";
+	printf(BHGRN "Do you want to accelarate or decelerate? [a] or [s]?\n" RESET);
+	printf(BHCYN "If you want to reset, press 'r'!\n" RESET);
+	printf(BHYEL "If you want to quit, press 'q'.\n" RESET);
 	std::cin >> c;
 	return c;
 }
@@ -42,9 +54,10 @@ void CharCallback(){
 
 	a_srv.request.input = in;
 
-	// If input is q we quit the program.
+	// If input is q we quit the program and manage errors.
 
 	if(in == 'q') stop = true;
+	if(in != 'q' && in != 'a' && in != 's' && in != 'r') printf(BHRED "\nError, you pressed the wrong key!\n\n" RESET);
 
 	// Waiting for the server to give a response.
 

@@ -40,13 +40,6 @@ bool ServerCallback(second_assignment::Accelerate::Request &req, second_assignme
 	if(req.input == 'g'){
 	}
 
-	// If we put something else we print in the server node console
-	// that the user has made some mistakes in typing.
-
-	if(req.input != 'g' && req.input != 's' && req.input != 'a' && req.input != 'r'){
-		std::cout << "It's not the right key!\n";
-	}
-
 	// We put in the response the value.
 
 	res.val = stuff;   
